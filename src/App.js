@@ -8,7 +8,7 @@ import Register from './components/Register'
 import ParticlesBg from 'particles-bg'
 
 // Your PAT (Personal Access Token) can be found in the portal under Authentification
-const PAT = 'cc52b731959843bda3b38624b749304c';
+const PAT = process.env.REACT_APP_PAT_CLARIFAI;
 
 // Specify the correct user_id/app_id pairings
 // Since you're making inferences outside your app's scope
