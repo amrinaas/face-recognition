@@ -17,13 +17,13 @@
 <hr><ul>
 <li>This app can recognize a face from an image.</li>
 </ul><h2>Setup</h2>
-<hr><p>You MUST get your own PAT(Personal Access Token) from Clarifai. You can follow this <a href="https://help.clarifai.com/hc/en-us/articles/4408131744407-Integrating-Clarifai-in-your-React-Javascript-project">guide</a> as well</p><h5>Steps</h5><ol>
+<hr><p>You MUST get your own PAT(Personal Access Token) from Clarifai. You can follow this <a href="https://help.clarifai.com/hc/en-us/articles/4408131744407-Integrating-Clarifai-in-your-React-Javascript-project">guide</a> as well</p><h5>Steps</h5>
+<ol>
 <li>Clone this repo</li>
-</ol><ol>
 <li>Run npm install / yarn install</li>
-</ol><ol>
 <li>Run npm start / yarn start</li>
-</ol><h2>Project Status</h2>
+</ol>
+<h2>Project Status</h2>
 <hr><p>In Progress</p><h2>Improvements</h2>
 <hr><ul>
 <li>Detect more faces in one picture</li>
