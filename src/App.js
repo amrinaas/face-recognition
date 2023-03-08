@@ -15,8 +15,29 @@ export default class App extends Component {
       imageUrl: '',
       box: {},
       route: 'signin',
-      isSignIn: false
+      isSignIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: '',
+        joined: ''
+      }
     }
+  }
+
+  loadUser = (data) => {
+    this.setState({ user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+    }})
+  }
+
+  componentDidMount() {
+    console.log('App is running');
   }
 
   calculateFaceLocation = (data) => {
@@ -24,12 +45,12 @@ export default class App extends Component {
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log(image, width, height, clarifyFace);
+    console.log(width, height, clarifyFace);
     return {
       leftCol: clarifyFace.left_col * width,
       topRow: clarifyFace.top_row * height,
-      rightCol: clarifyFace.right_col * width,
-      bottomRow: clarifyFace.bottom_row * height
+      rightCol: width - (clarifyFace.right_col * width),
+      bottomRow: height - (clarifyFace.bottom_row * height)
     }
   }
 
@@ -96,7 +117,22 @@ export default class App extends Component {
     this.setState({ imageUrl: this.state.input})
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => response.text())
-        .then(result => this.displayFaceBox(this.calculateFaceLocation(result)))
+        .then(result => {
+          this.displayFaceBox(this.calculateFaceLocation(result))
+          if (result) {
+            fetch(process.env.REACT_APP_API_URL+'/image', {
+              method: 'put',
+              headers: {'Content-Type' : 'application/json'},
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
+            })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+            })
+          }
+        })
         .catch(error => console.log('error', error));
   }
 
@@ -108,7 +144,7 @@ export default class App extends Component {
         <Navigation onRouteChange={this.onRouteChange} isSignIn={isSignIn} />
         {route === 'home' ? 
           <div>
-            <Rank />
+            <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageLinkForm 
               onInputChange={this.onInputChange} 
               onSubmit={this.onSubmit} 
@@ -116,12 +152,9 @@ export default class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>  
           : ( route === 'signin' ? 
-              <SignIn onRouteChange={this.onRouteChange} /> : <Register onRouteChange={this.onRouteChange} /> 
+              <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} /> 
             ) 
-          
-          
-           
-    }
+        }
       </div>
     );
   }
