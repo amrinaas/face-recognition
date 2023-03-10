@@ -7,11 +7,8 @@ import SignIn from './components/SignIn'
 import Register from './components/Register'
 import ParticlesBg from 'particles-bg'
  
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      input: '',
+const initialState = {
+  input: '',
       imageUrl: '',
       box: {},
       route: 'signin',
@@ -23,7 +20,11 @@ export default class App extends Component {
         entries: '',
         joined: ''
       }
-    }
+}
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = initialState
   }
 
   loadUser = (data) => {
@@ -65,7 +66,7 @@ export default class App extends Component {
 
   onRouteChange = (route) => {
     if(route === 'signout') {
-      this.setState({isSignIn: false})
+      this.setState(initialState)
     } else if (route === 'home') {
       this.setState({isSignIn: true})
     }
@@ -131,9 +132,10 @@ export default class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count }))
             })
+            .catch(err => console.log('error fetch image', err))
           }
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.log('error clarifai', error));
   }
 
   render() {
