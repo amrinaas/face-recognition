@@ -74,68 +74,23 @@ export default class App extends Component {
   }
 
   onSubmit = () => {
-    // Your PAT (Personal Access Token) can be found in the portal under Authentification
-    const PAT = process.env.REACT_APP_PAT_CLARIFAI;
-
-    // Specify the correct user_id/app_id pairings
-    // Since you're making inferences outside your app's scope
-    const USER_ID = process.env.REACT_APP_USER_ID_CLARIFAI;       
-    const APP_ID = process.env.REACT_APP_APP_ID_CLARIFAI;
-
-    // Change these to whatever model and image URL you want to use
-    const MODEL_ID = process.env.REACT_APP_MODEL_ID_CLARIFAI;
-    const MODEL_VERSION_ID = process.env.REACT_APP_MODEL_VERSION_ID_CLARIFAI;    
-    const IMAGE_URL = this.state.input;
-
-    ///////////////////////////////////////////////////////////////////////////////////
-    // YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
-    ///////////////////////////////////////////////////////////////////////////////////
-
-    const raw = JSON.stringify({
-        "user_app_id": {
-            "user_id": USER_ID,
-            "app_id": APP_ID
-        },
-        "inputs": [
-            {
-                "data": {
-                    "image": {
-                        "url": IMAGE_URL
-                    }
-                }
-            }
-        ]
-    });
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Key ' + PAT
-        },
-        body: raw
-    };
     this.setState({ imageUrl: this.state.input})
-    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
-        .then(response => response.text())
-        .then(result => {
-          this.displayFaceBox(this.calculateFaceLocation(result))
-          if (result) {
-            fetch(process.env.REACT_APP_API_URL+'/image', {
-              method: 'put',
-              headers: {'Content-Type' : 'application/json'},
-              body: JSON.stringify({
-                id: this.state.user.id
-              })
-            })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count }))
-            })
-            .catch(err => console.log('error fetch image', err))
-          }
-        })
-        .catch(error => console.log('error clarifai', error));
+
+    fetch(process.env.REACT_APP_API_URL+'/image', {
+      method: 'put',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify({
+        id: this.state.user.id,
+        imageUrl: this.state.input
+      })
+    })
+    .then(response => response.json())
+    .then(count => {
+      console.log('count', count);
+      this.displayFaceBox(this.calculateFaceLocation(count.result))
+      this.setState(Object.assign(this.state.user, { entries: count.entries }))
+    })
+    .catch(err => console.log('error fetch image', err))
   }
 
   render() {
