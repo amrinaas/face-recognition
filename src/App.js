@@ -10,7 +10,7 @@ import ParticlesBg from 'particles-bg'
 const initialState = {
   input: '',
       imageUrl: '',
-      box: {},
+      box: [],
       route: 'signin',
       isSignIn: false,
       user: {
@@ -42,21 +42,25 @@ export default class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const clarifyFace = JSON.parse(data).outputs[0].data.regions[0].region_info.bounding_box;
+    const clarifyFace = data.outputs[0].data.regions;
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
-    console.log(width, height, clarifyFace);
-    return {
-      leftCol: clarifyFace.left_col * width,
-      topRow: clarifyFace.top_row * height,
-      rightCol: width - (clarifyFace.right_col * width),
-      bottomRow: height - (clarifyFace.bottom_row * height)
-    }
+
+    let boundaryBox = clarifyFace.map((a,b) => {
+      let box = a.region_info.bounding_box;
+      return {
+        leftCol: box.left_col * width,
+        topRow: box.top_row * height,
+        rightCol: width - (box.right_col * width),
+        bottomRow: height - (box.bottom_row * height)
+      }
+    })
+
+    return boundaryBox;
   }
 
   displayFaceBox = (box) => {
-    console.log('box', box);
     this.setState({ box: box })
   }
 
@@ -86,7 +90,6 @@ export default class App extends Component {
     })
     .then(response => response.json())
     .then(count => {
-      console.log('count', count);
       this.displayFaceBox(this.calculateFaceLocation(count.result))
       this.setState(Object.assign(this.state.user, { entries: count.entries }))
     })
