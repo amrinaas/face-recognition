@@ -8,18 +8,19 @@ import Register from './components/Register'
 import ParticlesBg from 'particles-bg'
  
 const initialState = {
-  input: '',
-      imageUrl: '',
-      box: [],
-      route: 'signin',
-      isSignIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: '',
-        joined: ''
-      }
+    input: '',
+    imageUrl: '',
+    box: [],
+    route: 'signin',
+    isSignIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: '',
+      joined: ''
+    },
+    isValid: false
 }
 export default class App extends Component {
   constructor() {
@@ -66,6 +67,14 @@ export default class App extends Component {
 
   onInputChange = (event) => {
     this.setState({ input: event.target.value })
+    let  re = /(\.jpg)$/i;
+    setTimeout(() => {
+      if (re.exec(event.target.value) && event.target.value) {
+        this.setState({ isValid: true})
+      } else {
+        this.setState({ isValid: false})
+      }
+    }, 2000);
   }
 
   onRouteChange = (route) => {
@@ -106,6 +115,7 @@ export default class App extends Component {
           <div>
             <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageLinkForm 
+              isValid={this.state.isValid}
               onInputChange={this.onInputChange} 
               onSubmit={this.onSubmit} 
             />

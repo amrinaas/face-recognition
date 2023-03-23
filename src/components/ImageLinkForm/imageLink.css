@@ -3,3 +3,8 @@
     background: #839dcb30;
     background-size: 40px 60px;
 }
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+}
