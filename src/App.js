@@ -118,6 +118,7 @@ export default class App extends Component {
               isValid={this.state.isValid}
               onInputChange={this.onInputChange} 
               onSubmit={this.onSubmit} 
+              box={box}
             />
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>  
