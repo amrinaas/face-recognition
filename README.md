@@ -1,34 +1,75 @@
-<h1>Face Recognition App</h1>
-<hr><p>This project is front end side</p><h2>General Information</h2>
-<hr><ul>
-<li>This is an application to detect a face from an image</li>
-</ul><ul>
-<li>This project is for my learning purpose</li>
-</ul><h2>Technologies Used</h2>
-<hr><ul>
-<li>HTML</li>
-</ul><ul>
-<li>CSS</li>
-</ul><ul>
-<li>JavaScript</li>
-</ul><ul>
-<li>React</li>
-</ul><h2>Features</h2>
-<hr><ul>
-<li>This app can recognize a face from an image.</li>
-</ul><h2>Setup</h2>
-<hr><p>You MUST get your own PAT(Personal Access Token) from Clarifai. You can follow this <a href="https://help.clarifai.com/hc/en-us/articles/4408131744407-Integrating-Clarifai-in-your-React-Javascript-project">guide</a> as well</p><h5>Steps</h5>
-<ol>
-<li>Clone this repo</li>
-<li>Run npm install / yarn install</li>
-<li>Run npm start / yarn start</li>
-</ol>
-<h2>Project Status</h2>
-<hr><p>In Progress</p><h2>Improvements</h2>
-<hr><ul>
-<li>Detect more faces in one picture</li>
-</ul><h2>Acknowledgement</h2>
-<hr><ul>
-<li>This project was based on tutorial from Zero To Mastery (ZTM), Udemy Course</li>
-</ul><h2>Contact</h2>
-<hr><p><span style="margin-right: 30px;"></span><a href="https://www.linkedin.com/in/amrinaas/"><img target="_blank" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" style="width: 10%;"></a><span style="margin-right: 30px;"></span><a href="https://github.com/amrinaas"><img target="_blank" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" style="width: 10%;"></a></p>
+# Face Recognition API
+
+This project is client side and integrated with [this](https://github.com/amrinaas/face-recognition-api) server side
+
+## Demo
+
+https://image-recognition.netlify.app/
+
+## Screenshots
+
+![sign in](https://user-images.githubusercontent.com/76085854/227434184-6fea9489-3f64-4322-bd09-1dd7528f789b.jpg)
+
+![validation](https://user-images.githubusercontent.com/76085854/227434227-18ac4b3e-31c2-4e25-94c9-eb962cfc703a.png)
+
+![image recog](https://user-images.githubusercontent.com/76085854/227434256-bcf921f1-c69d-4f40-8ff9-630670e73a04.png)
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/amrinaas/face-recognition
+```
+
+Go to the project directory
+
+```bash
+  cd face-recognition
+```
+
+Install dependencies
+
+```bash
+  npm install / yarn install
+```
+
+Start the server
+
+```bash
+  npm run start / yarn start
+```
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables from `.env.example` to your `.env` file
+
+## Tech Stack
+
+**Client:** React
+
+**Server:** Node, Express
+
+**Database:** PostgreSQL
+
+## Features
+
+- Register new user
+- Sign In user
+- Detect face from an image
+
+
+## Feedback
+
+If you have any feedback, please reach out to me at amrinaas96@gmail.com
+
+
+## Authors
+
+- [@amrinaas](https://www.github.com/amrinaas)
+
+
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/amrinaas/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/amrinaas/)
+
